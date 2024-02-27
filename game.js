@@ -30,23 +30,24 @@ function setCanvasSize() {
 
 function startGame() {
   console.log({canvasSise, elementSize});
-  context.font = elementSize * 0.8 + 'px Verdana'; // Reducir el tamaño del texto para ajustarlo mejor
-  context.font = elementSize + 'px Verdana';
-  context.textAlign = 'center'
 
-  const map = maps[0]
+  context.font = elementSize + 'px Verdana';
+  context.textAlign = 'start'
+
+  const map = maps[2]
   const mapRow = map.trim().split('\n');//quita los espacios en blanco del array, luego crea arrays separandolos por saltode linea.
   const mapRowCols = mapRow.map(item => item.trim().split(''))//quita los espacios en blanco de cada array de string, luego separa los string del array en elemento por elemento.
   console.log(mapRowCols)
   
-
-  for(row = 0; row < 10; row++) {
-    for(col = 0; col < 10; col++){
-      let x = col * elementSize + elementSize / 2; // Centrar el texto horizontalmente
-      let y = row * elementSize + elementSize * 0.8 + elementSize / 10; // Ajustar la posición vertical del texto
-      context.fillText(emojis[mapRowCols[row][col]], x, y); 
-    }
-  };
+  mapRowCols.forEach((row, rowIndex) => {
+    row.forEach((col, colIndex) => {
+      const emoji = emojis[col];
+      const postX = elementSize * colIndex;
+      const postY = elementSize * (rowIndex + 1);
+      context.fillText(emoji, postX , postY)
+      console.log({row, rowIndex, col, colIndex})
+    })
+  });
 };
 
 btnUp.addEventListener('click', moveUp);
