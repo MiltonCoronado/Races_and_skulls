@@ -133,7 +133,6 @@ function moveRight() {
 
 function moveDown() {
   console.log('Me quiero mover hacia abajo')
-  console.log('Me quiero mover a la derecha')
   if((playerPosition.y + elementSize) > canvasSise){
     console.log('OUT')
   }else {
