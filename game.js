@@ -13,7 +13,7 @@ let elementSize;
 let level = 0;
 let lives = 3;
 
-let timeStart;
+let timeStart = 0;
 let timePlayer;
 let timeInterval;
 
@@ -59,11 +59,6 @@ function startGame() {
   if(!map){
     gameWin()
     return
-  };
-
-  if(!timeStart){
-    timeStart = Date.now()
-    timeInterval = setInterval(showTime, 100)
   };
 
   const mapRow = map.trim().split('\n');//quita los espacios en blanco del array, luego crea arrays separandolos por saltode linea.
@@ -136,7 +131,7 @@ function levelFail(){
   if(lives <= 0){
     level = 0;
     lives = 3;
-    timeStart = undefined;
+    timeStart = 0;
   }
 
   playerPosition.x = undefined;
@@ -147,7 +142,6 @@ function levelFail(){
 function gameWin(){
   console.log('terminaste el juego')
   clearInterval(timeInterval)//Mata al setInterval(showTime, 100)
-  localStorage.setItem('record_time')
 };
 
 function showLives(){
@@ -155,6 +149,13 @@ function showLives(){
 
   spanLives.innerHTML = heartsArray;
 };
+
+function startTimeWithMovement(){
+  if(timeStart === 0){
+    timeStart = Date.now()
+    timeInterval = setInterval(showTime, 100)
+  };
+}
 
 function showTime(){
   spantime.innerHTML = Date.now() - timeStart;
@@ -200,6 +201,7 @@ function moveUp() {
     playerPosition.y -= elementSize
     startGame();
   }
+  startTimeWithMovement()
 };
 
 function moveLeft() {
@@ -209,6 +211,7 @@ function moveLeft() {
     playerPosition.x -= elementSize
     startGame();
   }
+  startTimeWithMovement()
 };
 
 function moveRight() {
@@ -218,6 +221,7 @@ function moveRight() {
     playerPosition.x += elementSize
     startGame();
   }
+  startTimeWithMovement()
 };
 
 function moveDown() {
@@ -227,6 +231,7 @@ function moveDown() {
     playerPosition.y += elementSize
     startGame();
   }
+  startTimeWithMovement()
 };
 
 
