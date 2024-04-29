@@ -51,7 +51,7 @@ function setCanvasSize() {
 };
 
 function startGame() {
-  console.log({canvasSise, elementSize});
+  // console.log({canvasSise, elementSize});
 
   context.font = elementSize + 'px Verdana';
   context.textAlign = 'start'
@@ -72,7 +72,7 @@ function startGame() {
 
   const mapRow = map.trim().split('\n');//quita los espacios en blanco del array, luego crea arrays separandolos por saltode linea.
   const mapRowCols = mapRow.map(item => item.trim().split(''))//quita los espacios en blanco de cada array de string, luego separa los string del array en elemento por elemento.
-  console.log(mapRowCols)
+  // console.log(mapRowCols)
 
   showLives();
   
