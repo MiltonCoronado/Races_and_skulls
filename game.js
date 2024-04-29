@@ -5,6 +5,8 @@ const btnDown = document.querySelector('#down');
 const canvas = document.querySelector('#game');
 const spanLives = document.querySelector('#lives');
 const spantime = document.querySelector('#time');
+const spanRecord = document.querySelector('#record');
+const pResult = document.querySelector('#result');
 
 const context = canvas.getContext('2d');
 
@@ -13,7 +15,7 @@ let elementSize;
 let level = 0;
 let lives = 3;
 
-let timeStart = 0;
+let timeStart;
 let timePlayer;
 let timeInterval;
 
@@ -29,7 +31,7 @@ const giftPosition = {
 
 let enemyPositions = [];
 
-window.addEventListener('load', setCanvasSize)//con "Window.addEvenlistener" hacemos que el html espere un evento, en este caso que cargue todo el HTML para que se ejecute la Fn "resize" y esta Fn ejecuta "startGame". es lo mas recomendable usando un CANVAS!!!
+window.addEventListener('load', setCanvasSize)//con "Window.addEvenlistener" hacemos que el html espere un evento, en este caso que cargue todo el HTML para que se ejecute la Fn "setCancasSize()" y esta Fn ejecuta "startGame". es lo mas recomendable usando un CANVAS!!!
 window.addEventListener('resize', setCanvasSize)
 
 
@@ -59,6 +61,13 @@ function startGame() {
   if(!map){
     gameWin()
     return
+  };
+
+  if (!timeStart){
+    timeStart = Date.now()
+    timeInterval = setInterval(showTime, 100)
+
+    showRecord()
   };
 
   const mapRow = map.trim().split('\n');//quita los espacios en blanco del array, luego crea arrays separandolos por saltode linea.
@@ -131,7 +140,7 @@ function levelFail(){
   if(lives <= 0){
     level = 0;
     lives = 3;
-    timeStart = 0;
+    timeStart = undefined;
   }
 
   playerPosition.x = undefined;
@@ -142,6 +151,23 @@ function levelFail(){
 function gameWin(){
   console.log('terminaste el juego')
   clearInterval(timeInterval)//Mata al setInterval(showTime, 100)
+
+  const recordTime = localStorage.getItem('record_time');
+  const playerTime = Date.now() - timeStart;
+    
+    if(recordTime){
+      
+      if(recordTime >= playerTime){
+        localStorage.setItem('record_time', playerTime);
+        pResult.innerText = 'FELICITACIONES SUPERASTE EL RECORD';
+      } else {
+        pResult.innerText = 'NO SUPERASTE EL RECORD';
+      }
+    } else {
+      localStorage.setItem('record_time', playerTime);
+      pResult.innerText = 'PRIMERA VEZ? MUY BIEN!!';
+    }
+    console.log({recordTime, playerTime});
 };
 
 function showLives(){
@@ -150,15 +176,12 @@ function showLives(){
   spanLives.innerHTML = heartsArray;
 };
 
-function startTimeWithMovement(){
-  if(timeStart === 0){
-    timeStart = Date.now()
-    timeInterval = setInterval(showTime, 100)
-  };
-}
-
 function showTime(){
   spantime.innerHTML = Date.now() - timeStart;
+};
+
+function showRecord(){
+  spanRecord.innerHTML = localStorage.getItem('record_time');
 };
 
 
@@ -201,7 +224,6 @@ function moveUp() {
     playerPosition.y -= elementSize
     startGame();
   }
-  startTimeWithMovement()
 };
 
 function moveLeft() {
@@ -211,7 +233,6 @@ function moveLeft() {
     playerPosition.x -= elementSize
     startGame();
   }
-  startTimeWithMovement()
 };
 
 function moveRight() {
@@ -221,7 +242,6 @@ function moveRight() {
     playerPosition.x += elementSize
     startGame();
   }
-  startTimeWithMovement()
 };
 
 function moveDown() {
@@ -231,7 +251,6 @@ function moveDown() {
     playerPosition.y += elementSize
     startGame();
   }
-  startTimeWithMovement()
 };
 
 
