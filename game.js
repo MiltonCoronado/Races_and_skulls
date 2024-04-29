@@ -6,7 +6,6 @@ const canvas = document.querySelector('#game');
 const spanLives = document.querySelector('#lives');
 const spantime = document.querySelector('#time');
 const spanRecord = document.querySelector('#record');
-const pResult = document.querySelector('#result');
 
 const context = canvas.getContext('2d');
 
@@ -156,16 +155,11 @@ function gameWin(){
   const playerTime = Date.now() - timeStart;
     
     if(recordTime){
-      
       if(recordTime >= playerTime){
         localStorage.setItem('record_time', playerTime);
-        pResult.innerText = 'FELICITACIONES SUPERASTE EL RECORD';
-      } else {
-        pResult.innerText = 'NO SUPERASTE EL RECORD';
-      }
+      } 
     } else {
       localStorage.setItem('record_time', playerTime);
-      pResult.innerText = 'PRIMERA VEZ? MUY BIEN!!';
     }
     console.log({recordTime, playerTime});
 };
