@@ -1,0 +1,15 @@
+{
+  "name": "races_and_skulls",
+  "version": "1.0.0",
+  "description": "Game make with canvas in javascript management the events, localstorage and other tools for this project...",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "game",
+    "canvas"
+  ],
+  "author": "Milton Coronado",
+  "license": "MIT"
+}
